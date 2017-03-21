@@ -89,7 +89,7 @@ to see the current data.
 
 ### Schematics.
 
-![](C:/Users/Josh/Pictures/schematics.JPG)
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/schematics.JPG)
 
 As we see on this board layout, we have several components. JP5 and JP6 is for
 the MKR 100 Arduino board that is the main controller. R1 and R2 are 10kΩ
@@ -99,7 +99,7 @@ have 3.3v going to them all powered by the MKR100 board. The board it self is
 powered by 5v USB, but later integration can add a battery pack that will make
 it portable. The entire size of the board is 1.95 inches by 1.85 inches.
 
-![](C:/Users/Josh/Pictures/board.JPG)
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/board.JPG)
 
 Equipment’s.
 ============
