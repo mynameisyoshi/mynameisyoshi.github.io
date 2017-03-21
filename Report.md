@@ -1,34 +1,3 @@
----
-csl: apa.csl
-bibliography: RPiCitations.bib
----
-
-Internet of Things Project
-==========================
-
-Projects website: http://mynameisyoshi.github.io/
-
- 
-
-Table of Contents
-=================
-
-1.  [Abstract](#this-file)
-
-2.  [​Declaration of Authorship](#humber-sense-hat)
-
-3.  [​Executive Summary](#humber-raspberry-pi-image-creation)
-
-4.  [​Schematics​  ](#enterprise-wi-fi)
-
-5.  [​Equipment](#references-generated-when-this-file-is-exported)
-
-6.  Challenges/Recommendations
-
-7.  Programming
-
- 
-
 Harsh Joshi
 
 Humber College
@@ -73,8 +42,8 @@ within of other works of any other author, in any form (ideas, equations,
 figures, previous technologies, tables, programs, texts) are properly
 acknowledged at the point of use.
 
-Executive Summary
-=================
+Executive Summary1
+==================
 
 As a student in the Computer Engineering Technology program, I will be
 integrating the knowledge and skills I have learned from our program into this
