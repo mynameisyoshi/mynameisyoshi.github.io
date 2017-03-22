@@ -19,7 +19,7 @@ Table of Contents
 
 3.  [​Executive Summary](#humber-raspberry-pi-image-creation)
 
-4.  [​Schematics​  ](#enterprise-wi-fi)
+4.  [​Schematics​](#enterprise-wi-fi)
 
 5.  [​Equipment](#references-generated-when-this-file-is-exported)
 
@@ -153,42 +153,32 @@ Programming
 
 Arduino code
 
-\#define \_DEBUG\_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define _DEBUG_
 
-\#include \<SPI.h\>
+#include <SPI.h>
+#include <WiFi101.h>
+#include <ThingerWifi.h>
+#include <DHT.h>
 
-\#include \<WiFi101.h\>
+#define USERNAME "your_user_name"
+#define DEVICE_ID "your_device_id"
+#define DEVICE_CREDENTIAL "your_device_credential"
 
-\#include \<ThingerWifi.h\>
+#define SSID "your_wifi_ssid"
+#define SSID_PASSWORD "your_wifi_ssid_password"
 
-\#include \<DHT.h\>
-
-\#define USERNAME "your\_user\_name"
-
-\#define DEVICE\_ID "your\_device\_id"
-
-\#define DEVICE\_CREDENTIAL "your\_device\_credential"
-
-\#define SSID "your\_wifi\_ssid"
-
-\#define SSID\_PASSWORD "your\_wifi\_ssid\_password"
-
-ThingerWifi thing(USERNAME, DEVICE\_ID, DEVICE\_CREDENTIAL);
+ThingerWifi thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
 
 const int LedPin = 6;
 
 // PIN configuration
-
 const int DhtSensorPin = 2;
-
 const int WaterRelayPin = 3;
-
 const int SoilMoistureSensorPin = A5;
-
 const int LightSensorPin = A6;
 
 int ledState = LOW;
-
 int waterRelayState = LOW;
 
 const int DhtType = DHT11;
@@ -196,91 +186,62 @@ const int DhtType = DHT11;
 DHT dht(DhtSensorPin, DhtType);
 
 void setup() {
+  Serial.begin(9600);
+  dht.begin();
 
-Serial.begin(9600);
+  // configure wifi network
+  thing.add_wifi(SSID, SSID_PASSWORD);
 
-dht.begin();
+  pinMode(LedPin, OUTPUT);
+  pinMode(WaterRelayPin, OUTPUT);
 
-// configure wifi network
+  // Configure the LED
+  // Need to track the state separatelly from the real pin, since MKR1000 does not respond the correct value when reading an output pin
+  thing["led"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = ledState;
+    }
+    else {
+      ledState = in ? HIGH : LOW;
+      digitalWrite(LedPin, ledState);
+    }
+  };
 
-thing.add\_wifi(SSID, SSID\_PASSWORD);
+  // Configure the Water Relay
+  // Need to track the state separatelly from the real pin, since MKR1000 does not respond the correct value when reading an output pin
+  thing["water"] << [](pson & in) {
+    if (in.is_empty()) {
+      in = waterRelayState;
+    }
+    else {
+      waterRelayState = in ? HIGH : LOW;
+      digitalWrite(WaterRelayPin, waterRelayState);
+    }
+  };
 
-pinMode(LedPin, OUTPUT);
+  thing["dht11"] >> [](pson & out) {
+    out["humidity"] = dht.readHumidity();
+    out["celsius"] = dht.readTemperature();
+    out["fahrenheit"] = dht.readTemperature(true);
+  };
 
-pinMode(WaterRelayPin, OUTPUT);
+  thing["light"] >> [](pson & out) {
+    out = map(analogRead(LightSensorPin), 0, 1023, 0, 100);
+  };
 
-// Configure the LED
-
-// Need to track the state separatelly from the real pin, since MKR1000 does not
-respond the correct value when reading an output pin
-
-thing["led"] \<\< [pson%20&%20in](pson%20&%20in) {
-
-if (in.is\_empty()) {
-
-in = ledState;
-
-}
-
-else {
-
-ledState = in ? HIGH : LOW;
-
-digitalWrite(LedPin, ledState);
-
-}
-
-};
-
-// Configure the Water Relay
-
-// Need to track the state separatelly from the real pin, since MKR1000 does not
-respond the correct value when reading an output pin
-
-thing["water"] \<\< [pson%20&%20in](pson%20&%20in) {
-
-if (in.is\_empty()) {
-
-in = waterRelayState;
-
-}
-
-else {
-
-waterRelayState = in ? HIGH : LOW;
-
-digitalWrite(WaterRelayPin, waterRelayState);
-
-}
-
-};
-
-thing["dht11"] \>\> [pson%20&%20out](pson%20&%20out) {
-
-out["humidity"] = dht.readHumidity();
-
-out["celsius"] = dht.readTemperature();
-
-out["fahrenheit"] = dht.readTemperature(true);
-
-};
-
-thing["light"] \>\> [pson%20&%20out](pson%20&%20out) {
-
-out = map(analogRead(LightSensorPin), 0, 1023, 0, 100);
-
-};
-
-thing["moisture"] \>\> [pson%20&%20out](pson%20&%20out) {
-
-out = map(analogRead(SoilMoistureSensorPin), 0, 1023, 0, 100);
-
-};
-
+  thing["moisture"] >> [](pson & out) {
+    out = map(analogRead(SoilMoistureSensorPin), 0, 1023, 0, 100);
+  };
 }
 
 void loop() {
+  thing.handle();
 
-thing.handle();
-
+  delay(86400000);
+  digitalWrite(WaterRelayPin,HIGH);
+  delay(20000);
+  digitalWrite(WaterRelayPin, LOW);
+  
+  
 }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
