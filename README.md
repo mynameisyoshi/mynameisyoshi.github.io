@@ -245,3 +245,10 @@ void loop() {
   
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
+Now you will need to create a account on thinger.io (you can go ahead with the
+free account). Next step will be adding the device to the website. And making a
+dashboard. The [video ](https://www.youtube.com/watch?v=rvAM3BCiHJs)should give
+you a quick preview on how to add things on the database.
