@@ -291,7 +291,7 @@ Dashboard
 
 Creating a dashboard allows you to see the data coming in from the sensors live.
 
-https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/dash.JPG
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/dash.JPG)
 
  
 
@@ -299,12 +299,12 @@ In the website you create a ID, name, and a small description of the dashboard.
 
  
 
-https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/dash%202.JPG
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/dash%202.JPG)
 
 After creating a dashboard you will see this. You can now enter in the dashboard
 and make dounut charts that will update at a set interval.
 
-https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/LED.JPG
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/LED.JPG)
 
 AS an example we will set up the LED on/off button that allows the user to turn
 the LED on/off on the board to see if the connection is live.
