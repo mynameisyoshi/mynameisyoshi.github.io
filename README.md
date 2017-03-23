@@ -191,7 +191,7 @@ void setup() {
 
   // configure wifi network
   thing.add_wifi(SSID, SSID_PASSWORD);
-
+    //the LED is for testing the connection 
   pinMode(LedPin, OUTPUT);
   pinMode(WaterRelayPin, OUTPUT);
 
@@ -250,5 +250,78 @@ void loop() {
 
 Now you will need to create a account on thinger.io (you can go ahead with the
 free account). Next step will be adding the device to the website. And making a
-dashboard. The [video ](https://www.youtube.com/watch?v=rvAM3BCiHJs)should give
+dashboard. The [video](https://www.youtube.com/watch?v=rvAM3BCiHJs)should give
 you a quick preview on how to add things on the database.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define SSID "your_wifi_ssid" 
+#define SSID_PASSWORD "your_wifi_ssid_password" 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This function take the SSID and and the password which has to be hard coded
+within the Arduino.
+
+ 
+
+To get you device connected to the web interface you will need to use this code:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define USERNAME "your_user_name" 
+#define DEVICE_ID "your_device_id" 
+#define DEVICE_CREDENTIAL "your_device_credential"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
+The first line takes in the username that you gave the website.
+
+ 
+
+![](../../../Pictures/device details.JPG)
+
+The device ID, and credentials are made by you but you can randomly generate the
+credentials as well. When dont making it you can copy and paste it in your code.
+
+ 
+
+Dashboard
+---------
+
+ 
+
+Creating a dashboard allows you to see the data coming in from the sensors live.
+
+![](../../../Pictures/dash.JPG)
+
+ 
+
+In the website you create a ID, name, and a small description of the dashboard.
+
+ 
+
+![](../../../Pictures/dash 2.JPG)
+
+After creating a dashboard you will see this. You can now enter in the dashboard
+and make dounut charts that will update at a set interval.
+
+![](../../../Pictures/LED.JPG)
+
+AS an example we will set up the LED on/off button that allows the user to turn
+the LED on/off on the board to see if the connection is live.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Configure the LED 
+// Need to track the state separatelly from the real pin, since MKR1000 does not respond the correct value when reading an output pin 
+
+thing["led"] << [](pson & in) { 
+if (in.is_empty()) { 
+in = ledState; } 
+
+else { ledState = in ? HIGH : LOW; 
+digitalWrite(LedPin, ledState); 
+} };
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
+In the code we have a boolean button that goes high : low and digitalWrite.
