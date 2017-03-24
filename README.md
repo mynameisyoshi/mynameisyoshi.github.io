@@ -277,7 +277,7 @@ The first line takes in the username that you gave the website.
 
  
 
-![](../../../Pictures/device details.JPG)
+![](https://github.com/mynameisyoshi/mynameisyoshi.github.io/blob/master/device%20details.JPG)
 
 The device ID, and credentials are made by you but you can randomly generate the
 credentials as well. When dont making it you can copy and paste it in your code.
